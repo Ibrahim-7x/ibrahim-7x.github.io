@@ -10898,6 +10898,28 @@ html {
   align-items: center;
 }
 
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  background-color: #24292e;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.github-btn:hover {
+  background-color: #0366d6;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  text-decoration: none;
+}
+
 #mainNav {
   padding-top: 1rem;
   padding-bottom: 1rem;
