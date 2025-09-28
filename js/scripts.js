@@ -51,4 +51,66 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
+    // Contact form handling
+    const contactForm = document.getElementById('contactForm');
+    const submitButton = document.getElementById('submitButton');
+    const successMessage = document.getElementById('submitSuccessMessage');
+    const errorMessage = document.getElementById('submitErrorMessage');
+
+    if (contactForm) {
+        // Initialize EmailJS with your credentials
+        emailjs.init('kAJWqGT_xm0LFC03f');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Show loading state
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+
+            // Hide any previous messages
+            successMessage.classList.add('d-none');
+            errorMessage.classList.add('d-none');
+
+            // Prepare email parameters
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                phone_number: document.getElementById('phone').value,
+                message: document.getElementById('message').value,
+                to_email: 'ahmedibrahim1106@gmail.com' // Your email address
+            };
+
+            // Send email using EmailJS
+            emailjs.send(
+                'service_vkuqco2', // Your EmailJS service ID
+                'template_xhbapwt', // Your EmailJS template ID
+                templateParams
+            ).then(function(response) {
+                // Show success message
+                successMessage.classList.remove('d-none');
+                errorMessage.classList.add('d-none');
+
+                // Reset form
+                contactForm.reset();
+
+                // Reset button
+                submitButton.textContent = 'Send';
+                submitButton.disabled = false;
+
+                console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+                // Show error message
+                errorMessage.classList.remove('d-none');
+                successMessage.classList.add('d-none');
+
+                // Reset button
+                submitButton.textContent = 'Send';
+                submitButton.disabled = false;
+
+                console.log('FAILED...', error);
+            });
+        });
+    }
+
 });
