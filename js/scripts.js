@@ -76,14 +76,50 @@ window.addEventListener('DOMContentLoaded', event => {
             successMessage.classList.add('d-none');
             errorMessage.classList.add('d-none');
 
+            // Get current timestamp
+            const timestamp = new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Karachi',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
             // Prepare email parameters
             const templateParams = {
                 from_name: document.getElementById('name').value,
                 from_email: document.getElementById('email').value,
                 phone_number: document.getElementById('phone').value,
                 message: document.getElementById('message').value,
-                to_email: 'ahmedibrahim1106@gmail.com' // Your email address
+                to_email: 'ahmedibrahim1106@gmail.com', // Your email address
+                submission_date: timestamp,
+                user_agent: navigator.userAgent,
+                page_url: window.location.href
             };
+
+            // Validate form before sending
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !phone || !message) {
+                alert('Please fill in all fields before submitting.');
+                submitButton.textContent = 'Send';
+                submitButton.disabled = false;
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                submitButton.textContent = 'Send';
+                submitButton.disabled = false;
+                return;
+            }
 
             // Send email using EmailJS
             emailjs.send(
@@ -102,7 +138,8 @@ window.addEventListener('DOMContentLoaded', event => {
                 submitButton.textContent = 'Send';
                 submitButton.disabled = false;
 
-                console.log('SUCCESS!', response.status, response.text);
+                console.log('SUCCESS! Email sent to:', templateParams.to_email);
+                console.log('Response:', response.status, response.text);
             }, function(error) {
                 // Show error message
                 errorMessage.classList.remove('d-none');
@@ -112,7 +149,12 @@ window.addEventListener('DOMContentLoaded', event => {
                 submitButton.textContent = 'Send';
                 submitButton.disabled = false;
 
-                console.log('FAILED...', error);
+                console.log('FAILED to send email:', error);
+
+                // Show more specific error message
+                if (error.text) {
+                    console.log('EmailJS Error:', error.text);
+                }
             });
         });
     }
