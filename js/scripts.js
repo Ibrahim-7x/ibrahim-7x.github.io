@@ -58,6 +58,10 @@ window.addEventListener('DOMContentLoaded', event => {
     const errorMessage = document.getElementById('submitErrorMessage');
 
     if (contactForm) {
+        // Enable submit button and remove disabled class
+        submitButton.disabled = false;
+        submitButton.classList.remove('disabled');
+
         // Initialize EmailJS with your credentials
         emailjs.init('kAJWqGT_xm0LFC03f');
 
