@@ -93,7 +93,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 from_email: document.getElementById('email').value,
                 phone_number: document.getElementById('phone').value,
                 message: document.getElementById('message').value,
-                to_email: 'ahmedibrahim1106@gmail.com', // Your email address
+                to_email: 'ahmedibrahim.cms123@gmail.com', // Your email address
                 submission_date: timestamp,
                 user_agent: navigator.userAgent,
                 page_url: window.location.href
